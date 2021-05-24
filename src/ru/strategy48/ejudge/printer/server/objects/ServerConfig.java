@@ -6,8 +6,6 @@ public class ServerConfig {
     private final String host;
     private final int port;
 
-    private final Path printerDirectory;
-
     private final Path printPageHtmlPath;
     private final Path successHtmlPath;
     private final Path failHtmlPath;
@@ -15,13 +13,11 @@ public class ServerConfig {
     private final Path usersListPath;
     private final Path tokensListPath;
 
-    public ServerConfig(final String host, final int port, final Path printerDirectory,
+    public ServerConfig(final String host, final int port,
                         final Path printPageHtmlPath, final Path successHtmlPath, final Path failHtmlPath,
                         final Path usersListPath, final Path tokensListPath) {
         this.host = host;
         this.port = port;
-
-        this.printerDirectory = printerDirectory;
 
         this.printPageHtmlPath = printPageHtmlPath;
         this.successHtmlPath = successHtmlPath;
@@ -37,10 +33,6 @@ public class ServerConfig {
 
     public int getPort() {
         return port;
-    }
-
-    public Path getPrinterDirectory() {
-        return printerDirectory;
     }
 
     public Path getPrintPageHtmlPath() {

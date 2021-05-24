@@ -28,8 +28,6 @@ public class XMLUtils {
         Node hostNode = document.getElementsByTagName("host").item(0);
         Node portNode = document.getElementsByTagName("port").item(0);
 
-        Node printerDir = document.getElementsByTagName("printer_dir").item(0);
-
         Node printerHtmlPath = document.getElementsByTagName("printer_html").item(0);
         Node successHtmlPath = document.getElementsByTagName("success_html").item(0);
         Node failHtmlPath = document.getElementsByTagName("fail_html").item(0);
@@ -37,8 +35,7 @@ public class XMLUtils {
         Node usersListPath = document.getElementsByTagName("users_list").item(0);
         Node tokensListPath = document.getElementsByTagName("tokens_list").item(0);
 
-        return new ServerConfig(hostNode.getTextContent(),
-                Integer.parseInt(portNode.getTextContent()), Path.of(printerDir.getTextContent()),
+        return new ServerConfig(hostNode.getTextContent(), Integer.parseInt(portNode.getTextContent()),
                 Path.of(printerHtmlPath.getTextContent()), Path.of(successHtmlPath.getTextContent()),
                 Path.of(failHtmlPath.getTextContent()), Path.of(usersListPath.getTextContent()),
                 Path.of(tokensListPath.getTextContent()));
