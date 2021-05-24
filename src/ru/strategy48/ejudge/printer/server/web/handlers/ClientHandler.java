@@ -30,6 +30,7 @@ public class ClientHandler implements HttpHandler {
         if (token == null || !printer.checkToken(token)) {
             exchange.sendResponseHeaders(200, 0);
             exchange.getResponseBody().close();
+            exchange.close();
             return;
         }
 
@@ -54,5 +55,7 @@ public class ClientHandler implements HttpHandler {
         OutputStream outputStream = exchange.getResponseBody();
         outputStream.write(source.getBytes());
         outputStream.close();
+
+        exchange.close();
     }
 }

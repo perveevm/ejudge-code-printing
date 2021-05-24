@@ -29,5 +29,6 @@ public class MainHandler implements HttpHandler {
         OutputStream stream = exchange.getResponseBody();
         stream.write(html.toString().getBytes());
         stream.close();
+        exchange.close();
     }
 }

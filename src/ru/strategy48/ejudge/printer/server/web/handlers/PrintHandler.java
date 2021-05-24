@@ -51,5 +51,7 @@ public class PrintHandler implements HttpHandler {
         OutputStream outputStream = exchange.getResponseBody();
         outputStream.write(html.toString().getBytes());
         outputStream.close();
+
+        exchange.close();
     }
 }
