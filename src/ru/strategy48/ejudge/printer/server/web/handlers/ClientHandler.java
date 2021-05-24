@@ -35,6 +35,13 @@ public class ClientHandler implements HttpHandler {
         }
 
         PrinterQuery query = printer.getPrintingCode();
+        if (query == null) {
+            exchange.sendResponseHeaders(200, 0);
+            exchange.getResponseBody().close();
+            exchange.close();
+            return;
+        }
+
         String source = query.getSource();
 
         StringBuilder sourceToPrint = new StringBuilder();
