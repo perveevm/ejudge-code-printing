@@ -1,0 +1,150 @@
+package ru.strategy48.ejudge.printer.client;
+
+import ru.strategy48.ejudge.printer.client.exceptions.PrinterClientException;
+import ru.strategy48.ejudge.printer.client.exceptions.WebPrinterClientException;
+import ru.strategy48.ejudge.printer.client.objects.ClientConfig;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import javax.print.*;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaSizeName;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PrintingClient implements AutoCloseable {
+    private final ClientConfig config;
+    private final CloseableHttpClient client = HttpClients.createDefault();
+
+    public PrintingClient(final ClientConfig config) {
+        this.config = config;
+    }
+
+    public void startListening() throws PrinterClientException {
+        Thread thread = new Thread(() -> {
+            while (true) {
+                String source;
+
+                try {
+                    source = getSource();
+                } catch (WebPrinterClientException ignored) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ignored1) {
+                    }
+                    continue;
+                }
+                if (source.isEmpty()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                    continue;
+                }
+
+                StringBuilder sourceToPrint = new StringBuilder();
+                PrintService printer = PrintServiceLookup.lookupDefaultPrintService();
+
+                sourceToPrint.append("Принтер: ").append(printer.getName());
+                sourceToPrint.append(System.lineSeparator());
+                sourceToPrint.append(System.lineSeparator());
+                sourceToPrint.append(source);
+
+                source = sourceToPrint.toString();
+
+                PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+                attributeSet.add(new Copies(1));
+                attributeSet.add(MediaSizeName.ISO_A4);
+
+                DocFlavor flavor = DocFlavor.INPUT_STREAM.TEXT_PLAIN_UTF_8;
+                Doc doc = new SimpleDoc(new ByteArrayInputStream(source.getBytes(StandardCharsets.UTF_8)),
+                        flavor, null);
+                DocPrintJob job = printer.createPrintJob();
+
+                System.out.println("Printing code using: " + printer.getName());
+                try {
+                    job.print(doc, attributeSet);
+                } catch (PrintException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new PrinterClientException("Thread was interrupted: " + e.getMessage(), e);
+        }
+    }
+
+    private String getSource() throws WebPrinterClientException {
+        try {
+            return EntityUtils.toString(sendPost());
+        } catch (IOException e) {
+            throw new WebPrinterClientException("Error happened while getting GET response: " + e.getMessage(), e);
+        }
+    }
+
+    private HttpEntity sendPost() throws WebPrinterClientException {
+        HttpPost post = new HttpPost(config.getPrinterURL());
+
+        List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("token", config.getToken()));
+
+        try {
+            post.setEntity(new UrlEncodedFormEntity(parameters));
+        } catch (UnsupportedEncodingException e) {
+            throw new WebPrinterClientException("Cannot encode parameters: " + e.getMessage(), e);
+        }
+
+        try {
+            CloseableHttpResponse response = client.execute(post);
+            return response.getEntity();
+        } catch (IOException e) {
+            throw new WebPrinterClientException("Error happened while executing POST query: " + e.getMessage(), e);
+        }
+    }
+
+    private HttpEntity sendGet() throws WebPrinterClientException {
+        HttpGet get = new HttpGet(config.getPrinterURL());
+
+        List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("token", config.getToken()));
+
+        URI uri;
+        try {
+            uri = new URIBuilder(get.getURI()).addParameters(parameters).build();
+        } catch (URISyntaxException e) {
+            throw new WebPrinterClientException("Error happened when creating GET query: " + e.getMessage(), e);
+        }
+        get.setURI(uri);
+
+        try {
+            CloseableHttpResponse response = client.execute(get);
+            return response.getEntity();
+        } catch (IOException e) {
+            throw new WebPrinterClientException("Error happened while executing GET query: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        client.close();
+    }
+}
