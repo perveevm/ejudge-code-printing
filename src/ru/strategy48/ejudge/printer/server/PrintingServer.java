@@ -34,6 +34,9 @@ public class PrintingServer {
     }
 
     public boolean sendForPrinting(final String login, final String password, final String source) {
+        if (login == null || password == null || source == null) {
+            return false;
+        }
         if (!users.containsKey(login)) {
             return false;
         }
