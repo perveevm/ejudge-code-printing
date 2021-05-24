@@ -1,5 +1,7 @@
 package ru.strategy48.ejudge.printer.client;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import ru.strategy48.ejudge.printer.client.exceptions.PrinterClientException;
 import ru.strategy48.ejudge.printer.client.exceptions.WebPrinterClientException;
 import ru.strategy48.ejudge.printer.client.objects.ClientConfig;
@@ -95,13 +97,18 @@ public class PrintingClient implements AutoCloseable {
 
     private String getSource() throws WebPrinterClientException {
         try {
-            return EntityUtils.toString(sendPost());
+            HttpResponse response = sendPost();
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                return "";
+            }
+            return EntityUtils.toString(response.getEntity());
         } catch (IOException e) {
             throw new WebPrinterClientException("Error happened while getting GET response: " + e.getMessage(), e);
         }
     }
 
-    private HttpEntity sendPost() throws WebPrinterClientException {
+    private HttpResponse sendPost() throws WebPrinterClientException {
         HttpPost post = new HttpPost(config.getPrinterURL());
 
         List<NameValuePair> parameters = new ArrayList<>();
@@ -114,8 +121,7 @@ public class PrintingClient implements AutoCloseable {
         }
 
         try {
-            CloseableHttpResponse response = client.execute(post);
-            return response.getEntity();
+            return client.execute(post);
         } catch (IOException e) {
             throw new WebPrinterClientException("Error happened while executing POST query: " + e.getMessage(), e);
         }
