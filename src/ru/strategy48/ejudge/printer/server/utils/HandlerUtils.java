@@ -23,6 +23,10 @@ public class HandlerUtils {
         Map<String, String> splitParameters = new HashMap<>();
         for (String param : parameters.toString().split("&")) {
             String[] cur = param.split("=");
+            if (cur.length != 2) {
+                continue;
+            }
+
             String name = URLDecoder.decode(cur[0], StandardCharsets.UTF_8);
             String val = URLDecoder.decode(cur[1], StandardCharsets.UTF_8);
             splitParameters.put(name, val);
