@@ -2,6 +2,20 @@ package ru.strategy48.ejudge.printer.server.objects;
 
 import java.nio.file.Path;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Describes configuration of {@link ru.strategy48.ejudge.printer.server.PrintingServer}
+ *
+ * <code>host</code> is hostname where web server is located
+ * <code>port</code> is TCP port of web server
+ *
+ * <code>printPageHtmlPath</code> is a {@link Path} to HTML printer page
+ * <code>successHtmlPath</code> is a {@link Path} to HTML page that is returned if source code was printed successfully
+ * <code>failHtmlPath</code> is a {@link Path} to HTML page that is returned if an error happened while printing source
+ *
+ * <code>usersListPath</code> is a {@link Path} to CSV file with permitted users list
+ * <code>tokensListPath</code> is a {@link Path} to XML file with access tokens list
+ */
 public class ServerConfig {
     private final String host;
     private final int port;

@@ -15,9 +15,22 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Some useful methods for working with XML files
+ */
 public class XMLUtils {
     private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
+    /**
+     * Parses server config from XML file
+     *
+     * @param configPath a {@link Path} to config file
+     * @return {@link ServerConfig} instance
+     * @throws ParserConfigurationException if error happened while parsing config
+     * @throws IOException                  if error happened while parsing config
+     * @throws SAXException                 if error happened while parsing config
+     */
     public static ServerConfig loadServerConfig(final Path configPath)
             throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -41,6 +54,15 @@ public class XMLUtils {
                 Path.of(tokensListPath.getTextContent()));
     }
 
+    /**
+     * Loads clients access tokens from a given XML file
+     *
+     * @param path {@link Path} to tokens file
+     * @return {@link Map} from token to {@link PrinterToken}
+     * @throws ParserConfigurationException if error happened while parsing tokens file
+     * @throws IOException                  if error happened while parsing tokens file
+     * @throws SAXException                 if error happened while parsing tokens file
+     */
     public static Map<String, PrinterToken> loadPrinterTokens(final Path path)
             throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder = factory.newDocumentBuilder();

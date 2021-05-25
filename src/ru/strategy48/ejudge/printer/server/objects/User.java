@@ -1,5 +1,9 @@
 package ru.strategy48.ejudge.printer.server.objects;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Describes ejudge user
+ */
 public class User {
     private final String login;
     private final String password;

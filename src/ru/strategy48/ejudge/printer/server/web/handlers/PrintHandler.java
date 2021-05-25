@@ -10,6 +10,10 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.Map;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Describes {@link HttpHandler} processing query to print source code
+ */
 public class PrintHandler implements HttpHandler {
     private final ServerConfig config;
     private final PrintingServer printer;

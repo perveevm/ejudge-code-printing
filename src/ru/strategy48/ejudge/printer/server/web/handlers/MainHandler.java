@@ -6,6 +6,10 @@ import ru.strategy48.ejudge.printer.server.objects.ServerConfig;
 
 import java.io.*;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Describes {@link HttpHandler} processing users queries from web interface
+ */
 public class MainHandler implements HttpHandler {
     private final ServerConfig config;
 

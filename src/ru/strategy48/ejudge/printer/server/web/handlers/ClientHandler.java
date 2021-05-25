@@ -13,6 +13,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Describes {@link HttpHandler} processing {@link ru.strategy48.ejudge.printer.client.PrintingClient} queries
+ */
 public class ClientHandler implements HttpHandler {
     private final ServerConfig config;
     private final PrintingServer printer;

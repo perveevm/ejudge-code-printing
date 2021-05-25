@@ -8,6 +8,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Main class that starts {@link PrintingClient}
+ */
 public class ClientMain {
     public static void main(String[] args) {
         if (args == null || args.length != 1) {

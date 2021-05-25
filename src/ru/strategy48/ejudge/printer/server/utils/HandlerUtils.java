@@ -10,7 +10,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Some useful methods for working with {@link com.sun.net.httpserver.HttpHandler}
+ */
 public class HandlerUtils {
+    /**
+     * Returns parsed GET/POST parameters from encoded URL
+     *
+     * @param response server response
+     * @return {@link Map} from parameter name to its value
+     * @throws IOException if error happened while reading from {@link HttpExchange}
+     */
     public static Map<String, String> parseResponseParameters(final HttpExchange response) throws IOException {
         StringBuilder parameters = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(response.getRequestBody()))) {

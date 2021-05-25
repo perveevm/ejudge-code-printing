@@ -12,7 +12,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Some useful methods for working with CSV files
+ */
 public class CSVUtils {
+    /**
+     * Parses permitted users table from given file
+     *
+     * @param path {@link Path} to given CSV file
+     * @return {@link Map} from login to {@link User} object
+     * @throws PrinterServerException if error happened while parsing CSV file
+     */
     public static Map<String, User> parseUsersTable(final Path path) throws PrinterServerException {
         List<String[]> rows;
 

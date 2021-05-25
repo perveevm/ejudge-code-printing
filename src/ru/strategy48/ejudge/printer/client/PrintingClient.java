@@ -1,7 +1,6 @@
 package ru.strategy48.ejudge.printer.client;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import ru.strategy48.ejudge.printer.client.exceptions.PrinterClientException;
 import ru.strategy48.ejudge.printer.client.exceptions.WebPrinterClientException;
 import ru.strategy48.ejudge.printer.client.objects.ClientConfig;
@@ -29,14 +28,28 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Class for talking with printing server
+ */
 public class PrintingClient implements AutoCloseable {
     private final ClientConfig config;
     private final CloseableHttpClient client = HttpClients.createDefault();
 
+    /**
+     * Constructs client using {@link ClientConfig}
+     *
+     * @param config given client config
+     */
     public PrintingClient(final ClientConfig config) {
         this.config = config;
     }
 
+    /**
+     * Starts talking with server
+     *
+     * @throws PrinterClientException if a fatal error happened while talking with server
+     */
     public void startListening() throws PrinterClientException {
         Thread thread = new Thread(() -> {
             while (true) {

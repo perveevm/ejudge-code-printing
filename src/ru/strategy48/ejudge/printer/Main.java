@@ -3,6 +3,10 @@ package ru.strategy48.ejudge.printer;
 import ru.strategy48.ejudge.printer.client.ClientMain;
 import ru.strategy48.ejudge.printer.server.ServerMain;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * The main class that starts tool in server or client mode
+ */
 public class Main {
     public static void main(String[] args) {
         if (args == null || args.length != 2) {

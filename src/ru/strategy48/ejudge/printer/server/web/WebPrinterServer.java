@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
 
+/**
+ * @author Perveev Mike (perveev_m@mail.ru)
+ * Web server for {@link PrintingServer}
+ */
 public class WebPrinterServer implements AutoCloseable {
     private final HttpServer server;
 
