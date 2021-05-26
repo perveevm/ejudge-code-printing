@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.tools.TextToPDF;
 import ru.strategy48.ejudge.printer.client.exceptions.PrinterClientException;
 import ru.strategy48.ejudge.printer.client.exceptions.WebPrinterClientException;
 import ru.strategy48.ejudge.printer.client.objects.ClientConfig;
@@ -106,14 +107,14 @@ public class PrintingClient implements AutoCloseable {
                     System.out.println("Cannot save file!");
                 }
 
-//                try {
-//                    PDDocument document = createDocument(source);
-//                    PrinterJob job = PrinterJob.getPrinterJob();
-//                    job.setPageable(new PDFPageable(document));
-//                    job.print();
-//                } catch (IOException | PrinterException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    PDDocument document = createDocument(source);
+                    PrinterJob job = PrinterJob.getPrinterJob();
+                    job.setPageable(new PDFPageable(document));
+                    job.print();
+                } catch (IOException | PrinterException e) {
+                    e.printStackTrace();
+                }
 
 //                PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 //                attributeSet.add(new Copies(1));
@@ -193,40 +194,42 @@ public class PrintingClient implements AutoCloseable {
     }
 
     private PDDocument createDocument(final String text) throws IOException {
-        String outputFileName = "SimpleReplace.pdf";
-        // the encoding will need to be adapted to your circumstances
-        String encoding = "ISO-8859-1";
-
-        // Create a document and add a page to it
-        PDDocument document = new PDDocument();
-        PDPage page1 = new PDPage(PDRectangle.A4);
-        // PDRectangle.LETTER and others are also possible
-        PDRectangle rect = page1.getMediaBox();
-        // rect can be used to get the page width and height
-        document.addPage(page1);
-
-        // Create a new font object selecting one of the PDF base fonts
-        PDFont fontPlain = PDType1Font.TIMES_ROMAN;
-        PDType0Font font = PDType0Font.load(document, new File("../../arial-unicode-ms/ARIALUNI.TTF"));
-
-        // Start a new content stream which will "hold" the to be created content
-        PDPageContentStream cos = new PDPageContentStream(document, page1);
-
-        // Define a text content stream using the selected font, move the cursor and draw some text
-        cos.beginText();
-        cos.setFont(font, 12);
-        cos.newLineAtOffset(100, rect.getHeight() - 50);
-        // add 'Hello World' twice
-        cos.showText(text);
-        cos.endText();
-
-        // Make sure that the content stream is closed
-        cos.close();
-
-        // Save the results and ensure that the document is properly closed
-        document.close();
-
-        return document;
+        TextToPDF shit = new TextToPDF();
+        return shit.createPDFFromText(new StringReader(text));
+//        String outputFileName = "SimpleReplace.pdf";
+//        // the encoding will need to be adapted to your circumstances
+//        String encoding = "ISO-8859-1";
+//
+//        // Create a document and add a page to it
+//        PDDocument document = new PDDocument();
+//        PDPage page1 = new PDPage(PDRectangle.A4);
+//        // PDRectangle.LETTER and others are also possible
+//        PDRectangle rect = page1.getMediaBox();
+//        // rect can be used to get the page width and height
+//        document.addPage(page1);
+//
+//        // Create a new font object selecting one of the PDF base fonts
+//        PDFont fontPlain = PDType1Font.TIMES_ROMAN;
+//        PDType0Font font = PDType0Font.load(document, new File("../../arial-unicode-ms/ARIALUNI.TTF"));
+//
+//        // Start a new content stream which will "hold" the to be created content
+//        PDPageContentStream cos = new PDPageContentStream(document, page1);
+//
+//        // Define a text content stream using the selected font, move the cursor and draw some text
+//        cos.beginText();
+//        cos.setFont(font, 12);
+//        cos.newLineAtOffset(100, rect.getHeight() - 50);
+//        // add 'Hello World' twice
+//        cos.showText(text);
+//        cos.endText();
+//
+//        // Make sure that the content stream is closed
+//        cos.close();
+//
+//        // Save the results and ensure that the document is properly closed
+//        document.close();
+//
+//        return document;
     }
 
     @Override
