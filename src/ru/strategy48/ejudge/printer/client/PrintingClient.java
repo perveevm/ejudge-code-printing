@@ -6,6 +6,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.printing.PDFPageable;
 import ru.strategy48.ejudge.printer.client.exceptions.PrinterClientException;
@@ -204,14 +206,15 @@ public class PrintingClient implements AutoCloseable {
         document.addPage(page1);
 
         // Create a new font object selecting one of the PDF base fonts
-//        PDFont fontPlain = PDType1Font.TIMES_ROMAN;
+        PDFont fontPlain = PDType1Font.TIMES_ROMAN;
+        PDFont font = PDTrueTypeFont.loadTTF(document, new File("arial-unicode-ms/ArialUnicodeMS.ttf"));
 
         // Start a new content stream which will "hold" the to be created content
         PDPageContentStream cos = new PDPageContentStream(document, page1);
 
         // Define a text content stream using the selected font, move the cursor and draw some text
         cos.beginText();
-//        cos.setFont(fontPlain, 12);
+        cos.setFont(font, 12);
         cos.newLineAtOffset(100, rect.getHeight() - 50);
         // add 'Hello World' twice
         cos.showText(text);
