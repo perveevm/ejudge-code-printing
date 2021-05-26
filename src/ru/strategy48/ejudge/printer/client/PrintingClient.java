@@ -207,7 +207,7 @@ public class PrintingClient implements AutoCloseable {
 
         // Create a new font object selecting one of the PDF base fonts
         PDFont fontPlain = PDType1Font.TIMES_ROMAN;
-        PDFont font = PDTrueTypeFont.loadTTF(document, new File("arial-unicode-ms/ArialUnicodeMS.ttf"));
+        PDFont font = PDTrueTypeFont.loadTTF(document, new File("../../arial-unicode-ms/ArialUnicodeMS.ttf"));
 
         // Start a new content stream which will "hold" the to be created content
         PDPageContentStream cos = new PDPageContentStream(document, page1);
