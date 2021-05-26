@@ -106,14 +106,14 @@ public class PrintingClient implements AutoCloseable {
                     System.out.println("Cannot save file!");
                 }
 
-                try {
-                    PDDocument document = createDocument(source);
-                    PrinterJob job = PrinterJob.getPrinterJob();
-                    job.setPageable(new PDFPageable(document));
-                    job.print();
-                } catch (IOException | PrinterException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    PDDocument document = createDocument(source);
+//                    PrinterJob job = PrinterJob.getPrinterJob();
+//                    job.setPageable(new PDFPageable(document));
+//                    job.print();
+//                } catch (IOException | PrinterException e) {
+//                    e.printStackTrace();
+//                }
 
 //                PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 //                attributeSet.add(new Copies(1));
