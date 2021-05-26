@@ -35,6 +35,7 @@ import java.util.List;
 public class PrintingClient implements AutoCloseable {
     private final ClientConfig config;
     private final CloseableHttpClient client = HttpClients.createDefault();
+    private int counter = 0;
 
     /**
      * Constructs client using {@link ClientConfig}
@@ -93,6 +94,13 @@ public class PrintingClient implements AutoCloseable {
                 DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
                 Doc doc = new SimpleDoc(new ByteArrayInputStream(source.getBytes()), flavor, null);
                 DocPrintJob job = printer.createPrintJob();
+
+                counter++;
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.valueOf(counter) + ".txt"))) {
+                    writer.append(source);
+                } catch (IOException e) {
+                    System.out.println("Cannot save file!");
+                }
 
                 System.out.println("Printing code using: " + printer.getName());
                 try {
