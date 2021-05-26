@@ -107,14 +107,14 @@ public class PrintingClient implements AutoCloseable {
                     System.out.println("Cannot save file!");
                 }
 
-//                try {
-//                    PDDocument document = createDocument(source);
-//                    PrinterJob job = PrinterJob.getPrinterJob();
-//                    job.setPageable(new PDFPageable(document));
-//                    job.print();
-//                } catch (IOException | PrinterException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    PDDocument document = createDocument(source);
+                    PrinterJob job = PrinterJob.getPrinterJob();
+                    job.setPageable(new PDFPageable(document));
+                    job.print();
+                } catch (IOException | PrinterException | IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
 
 //                PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 //                attributeSet.add(new Copies(1));
@@ -195,6 +195,8 @@ public class PrintingClient implements AutoCloseable {
 
     private PDDocument createDocument(final String text) throws IOException {
         TextToPDF shit = new TextToPDF();
+        PDType0Font font = PDType0Font.load(new PDDocument(), new File("../../arial-unicode-ms/Roboto-Black.ttf"));
+        shit.setFont(font);
         return shit.createPDFFromText(new StringReader(text));
 //        String outputFileName = "SimpleReplace.pdf";
 //        // the encoding will need to be adapted to your circumstances
