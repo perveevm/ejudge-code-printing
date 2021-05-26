@@ -195,7 +195,7 @@ public class PrintingClient implements AutoCloseable {
 
     private PDDocument createDocument(final String text) throws IOException {
         TextToPDF shit = new TextToPDF();
-        PDType0Font font = PDType0Font.load(new PDDocument(), new File("../../arial-unicode-ms/Roboto-Black.ttf"));
+        PDType0Font font = PDType0Font.load(new PDDocument(), new File("../../arial-unicode-ms/Roboto-Regular.ttf"));
         shit.setFont(font);
         return shit.createPDFFromText(new StringReader(text));
 //        String outputFileName = "SimpleReplace.pdf";
