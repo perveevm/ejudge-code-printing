@@ -204,14 +204,14 @@ public class PrintingClient implements AutoCloseable {
         document.addPage(page1);
 
         // Create a new font object selecting one of the PDF base fonts
-        PDFont fontPlain = PDType1Font.TIMES_ROMAN;
+//        PDFont fontPlain = PDType1Font.TIMES_ROMAN;
 
         // Start a new content stream which will "hold" the to be created content
         PDPageContentStream cos = new PDPageContentStream(document, page1);
 
         // Define a text content stream using the selected font, move the cursor and draw some text
         cos.beginText();
-        cos.setFont(fontPlain, 12);
+//        cos.setFont(fontPlain, 12);
         cos.newLineAtOffset(100, rect.getHeight() - 50);
         // add 'Hello World' twice
         cos.showText(text);
