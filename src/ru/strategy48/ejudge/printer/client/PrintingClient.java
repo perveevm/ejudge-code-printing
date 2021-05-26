@@ -90,9 +90,8 @@ public class PrintingClient implements AutoCloseable {
                 attributeSet.add(new Copies(1));
                 attributeSet.add(MediaSizeName.ISO_A4);
 
-                DocFlavor flavor = DocFlavor.INPUT_STREAM.TEXT_PLAIN_UTF_8;
-                Doc doc = new SimpleDoc(new ByteArrayInputStream(source.getBytes(StandardCharsets.UTF_8)),
-                        flavor, null);
+                DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+                Doc doc = new SimpleDoc(source.getBytes(), flavor, null);
                 DocPrintJob job = printer.createPrintJob();
 
                 System.out.println("Printing code using: " + printer.getName());
