@@ -89,9 +89,9 @@ public class PrintingClient implements AutoCloseable {
                     System.out.println(curFlavor.getMediaType() + " " + curFlavor.getMimeType() + " " + curFlavor.getRepresentationClassName());
                 }
 
-                sourceToPrint.append("Printer: ").append(printer.getName());
-                sourceToPrint.append(System.lineSeparator());
-                sourceToPrint.append(System.lineSeparator());
+//                sourceToPrint.append("Printer: ").append(printer.getName());
+//                sourceToPrint.append(System.lineSeparator());
+//                sourceToPrint.append(System.lineSeparator());
                 sourceToPrint.append(source);
 
                 source = sourceToPrint.toString();
