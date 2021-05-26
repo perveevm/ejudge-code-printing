@@ -74,6 +74,10 @@ public class PrintingClient implements AutoCloseable {
 
                 StringBuilder sourceToPrint = new StringBuilder();
                 PrintService printer = PrintServiceLookup.lookupDefaultPrintService();
+                
+                for (DocFlavor curFlavor : printer.getSupportedDocFlavors()) {
+                    System.out.println(curFlavor.getMediaType() + " " + curFlavor.getMimeType() + " " + curFlavor.getRepresentationClassName());
+                }
 
                 sourceToPrint.append("Принтер: ").append(printer.getName());
                 sourceToPrint.append(System.lineSeparator());
