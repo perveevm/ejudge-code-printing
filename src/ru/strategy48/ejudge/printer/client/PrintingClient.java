@@ -98,6 +98,7 @@ public class PrintingClient implements AutoCloseable {
                 sourceToPrint.append(source);
 
                 source = sourceToPrint.toString();
+                source = source.replace("\t", "    ");
 
                 System.out.println("Printing code using: " + printer.getName());
                 counter++;
