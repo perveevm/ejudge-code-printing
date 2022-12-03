@@ -32,7 +32,7 @@ public class ClientHandler implements HttpHandler {
         String token = parameters.getOrDefault("token", null);
 
         if (token == null || !printer.checkToken(token)) {
-            exchange.sendResponseHeaders(200, 0);
+            exchange.sendResponseHeaders(403, 0);
             exchange.getResponseBody().close();
             exchange.close();
             return;

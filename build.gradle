@@ -23,6 +23,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.10'
     compile 'org.apache.pdfbox:pdfbox:2.0.5'
     compile 'org.apache.pdfbox:pdfbox-tools:2.0.5'
+    compile 'org.kantega.htmltopdf:htmltopdf:1.1'
 }
 
 task buildJar(type: Jar) {

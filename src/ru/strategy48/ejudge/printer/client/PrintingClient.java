@@ -11,6 +11,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.printing.PDFPageable;
 import org.apache.pdfbox.tools.TextToPDF;
+import org.kantega.htmltopdf.pdf.HtmlToPdfGenerator;
 import ru.strategy48.ejudge.printer.client.exceptions.PrinterClientException;
 import ru.strategy48.ejudge.printer.client.exceptions.WebPrinterClientException;
 import ru.strategy48.ejudge.printer.client.objects.ClientConfig;
@@ -48,6 +49,10 @@ public class PrintingClient implements AutoCloseable {
     private final ClientConfig config;
     private final CloseableHttpClient client = HttpClients.createDefault();
     private int counter = 0;
+
+    private static final PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+
+    private static final HtmlToPdfGenerator generator = new HtmlToPdfGenerator();
 
     /**
      * Constructs client using {@link ClientConfig}
